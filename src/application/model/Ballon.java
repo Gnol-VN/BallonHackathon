@@ -14,51 +14,61 @@ import javafx.util.Duration;
 public class Ballon extends Thread {
     private int ballonID;
     private static int idCount;
+    private boolean right;
     private StackPane stackPane;
 
-    public Ballon() {
+    public Ballon(String text, boolean right) {
         idCount++;
         ballonID = idCount;
 
         //Begin create UI
         StackPane stackPane = new StackPane();
-        Label label = new Label(": "+ ballonID);
+        Label label = new Label(text);
+        this.right = right;
         Circle circle = new Circle();
 //        circle.setCenterX(30.0f);
 //        circle.setCenterY(13.0f);
         circle.setRadius(70.0f);
-        circle.setOnMouseClicked(new EventHandler<MouseEvent>()
-        {
+        circle.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent t) {
 //                rectangle.setFill(Color.RED);
-                System.out.println("CLICKED!!!!!!!!!!!!!!!!!");
+                if(right){
+                    //destory
+                    //add score
+                    System.out.println("+1");
+                }else{
+                    //destory
+                    //minus score
+                    System.out.println("-1");
+                }
             }
         });
 
         circle.setFill(Color.ORANGE);
-        stackPane.getChildren().addAll(circle,label);
-        stackPane.setAccessibleText("Ballon: "+ ballonID);
+        stackPane.getChildren().addAll(circle, label);
+        stackPane.setAccessibleText("Ballon: " + ballonID);
         this.setStackPane(stackPane);
         //End UI
     }
-    public void run(){
-        try{
+
+    public void run() {
+        try {
             enter();
-        }catch (InterruptedException e){
+        } catch (InterruptedException e) {
             e.printStackTrace();
         }
     }
 
     private void enter() throws InterruptedException {
         //Begin UI: stay at Waiting line
-        Platform.runLater(new MyRunnable(this){
+        Platform.runLater(new MyRunnable(this) {
             int width = (int) ((Math.random() * ((8 - 0) + 1)) + 0);
 
             @Override
             public void run() {
-                Main.GROUP_ROOT.add(this.getBallon().getStackPane(),width
-                        ,20);
+                Main.GROUP_ROOT.add(this.getBallon().getStackPane(), width
+                        , 20);
 //                Main.LANE_LIST.get(0).getLaneFlowPane().getChildren().add(this.getBallon().getStackPane());
             }
         });
@@ -77,7 +87,7 @@ public class Ballon extends Thread {
         Thread.sleep(17000);
 
         //Begin deletion in UI
-        Platform.runLater(new MyRunnable(this){
+        Platform.runLater(new MyRunnable(this) {
             @Override
             public void run() {
                 Main.GROUP_ROOT.getChildren().remove(this.getBallon().getStackPane());
