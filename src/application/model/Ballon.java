@@ -38,9 +38,12 @@ public class Ballon extends Thread {
 //        circle.setCenterX(30.0f);
 //        circle.setCenterY(13.0f);
         circle.setRadius(70.0f);
-        FileInputStream input = new FileInputStream("ball.png");
-        Image image = new Image(input);
-        ImageView imageView = new ImageView(image);
+        FileInputStream balloon = new FileInputStream("ball.png");
+        Image image1 = new Image(balloon);
+        FileInputStream burst = new FileInputStream("burst.jpg");
+        Image image2 = new Image(burst);
+        ImageView imageView = new ImageView();
+        imageView.setImage(image1);
         stackPane.setStyle("-fx-cursor: hand;");
         stackPane.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
@@ -57,6 +60,8 @@ public class Ballon extends Thread {
                 }else{
                     //destory
                     //minus score
+
+                    imageView.setImage(image2);
                     System.out.println("-1");
                     SCORE--;
                     Main.LABEL_SCORE.setText("Score: " + String.valueOf(SCORE));
