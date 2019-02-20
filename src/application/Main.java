@@ -2,6 +2,7 @@ package application;
 
 import application.producer_consumer.Producer;
 import javafx.application.Application;
+import javafx.application.Platform;
 import javafx.geometry.Insets;
 import javafx.geometry.Orientation;
 import javafx.scene.Scene;
@@ -11,25 +12,27 @@ import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.stage.Stage;
 
+import java.util.Timer;
+import java.util.TimerTask;
+
 
 public class Main extends Application {
     public static GridPane GROUP_ROOT = new GridPane();
     public static FlowPane WAITING_AREA_FLOWPANE = new FlowPane(Orientation.HORIZONTAL, 5, 5);
-
+    public static int time = 10 * 60;
 
     //Metric
     public static volatile int SCORE = 0;
     public static String NAME = "Powder Pop";
 
-//    Label
+    //    Label
     public static Label LABEL_NAME = new Label("Name: " + String.valueOf(NAME));
     public static Label LABEL_SCORE = new Label("Score: " + String.valueOf(SCORE));
     public static Label LABEL_TIMER = new Label("Time: " + String.valueOf("10:00"));
 
 
-
     public static HBox SCORE_BOARD = new HBox();
-    public static  StackPane SCORE_STACK = new StackPane();
+    public static StackPane SCORE_STACK = new StackPane();
 
 
     @Override
@@ -54,6 +57,7 @@ public class Main extends Application {
     public static void main(String[] args) {
         launch(args);
     }
+
     public static void prepareUI(Stage primaryStage) {
         //1. Init the properties and constrains of GROUP_ROOT
         GROUP_ROOT.setHgap(100);
@@ -74,12 +78,10 @@ public class Main extends Application {
         GROUP_ROOT.add(WAITING_AREA_FLOWPANE, 0, 10);
 
 
-
-
 //        2. Scoreboard
         SCORE_BOARD.setSpacing(200);
 //        2.2 add rectangle
-        Rectangle rectangle = new Rectangle(1000,100, Color.WHITE);
+        Rectangle rectangle = new Rectangle(1000, 100, Color.WHITE);
         SCORE_STACK.getChildren().add(rectangle);
         SCORE_STACK.setStyle("-fx-font: 30  arial; -fx-base: #b6e7c9;");
 
@@ -93,8 +95,21 @@ public class Main extends Application {
 
         SCORE_STACK.getChildren().add(SCORE_BOARD);
 
-        GROUP_ROOT.add(SCORE_STACK, 0 , 0);
+        GROUP_ROOT.add(SCORE_STACK, 0, 0);
+        Timer timer = new Timer();
+        timer.schedule(new TimerTask() {
+            public void run() {
+                if (time <= 0) {
+                    timer.cancel();
+                    //TODO Stop the game
+                }
 
+                long mm = time / 60 % 60;
+                long ss = time % 60;
+                Platform.runLater(() -> LABEL_TIMER.setText("Time: " + (mm > 0 ? (mm + "m") : "") + ss + "s"));
+                time--;
+            }
+        }, 0, 1000);
         primaryStage.setTitle("Hello World");
         primaryStage.setScene(new Scene(GROUP_ROOT, 1000, 1000));
         primaryStage.show();
