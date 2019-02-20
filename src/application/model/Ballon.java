@@ -9,9 +9,13 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.StackPane;
+import javafx.scene.media.AudioClip;
+import javafx.scene.media.Media;
+import javafx.scene.media.MediaPlayer;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 import javafx.util.Duration;
+import sun.audio.AudioPlayer;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -40,7 +44,7 @@ public class Ballon extends Thread {
         circle.setRadius(70.0f);
         FileInputStream balloon = new FileInputStream("ball.png");
         Image image1 = new Image(balloon);
-        FileInputStream burst = new FileInputStream("burst.jpg");
+        FileInputStream burst = new FileInputStream("burst.png");
         Image image2 = new Image(burst);
         ImageView imageView = new ImageView();
         imageView.setImage(image1);
@@ -55,8 +59,13 @@ public class Ballon extends Thread {
                     System.out.println("+1");
                     SCORE++;
                     Main.LABEL_SCORE.setText("Score: " + String.valueOf(SCORE));
-                    translateTransition.setDuration(Duration.millis(1000));
+                    imageView.setImage(null);
+                    label.setText(null);
+                    stackPane.getChildren().removeAll();
 
+                    Main.GROUP_ROOT.getChildren().remove(this);
+                    AudioClip ALERT_AUDIOCLIP = new AudioClip(Main.class.getResource("true.mp3").toString());
+                    ALERT_AUDIOCLIP.play();
                 }else{
                     //destory
                     //minus score
@@ -65,6 +74,8 @@ public class Ballon extends Thread {
                     System.out.println("-1");
                     SCORE--;
                     Main.LABEL_SCORE.setText("Score: " + String.valueOf(SCORE));
+                    AudioClip ALERT_AUDIOCLIP = new AudioClip(Main.class.getResource("boom.wav").toString());
+                    ALERT_AUDIOCLIP.play();
                 }
             }
         });
@@ -76,7 +87,12 @@ public class Ballon extends Thread {
         this.setStackPane(stackPane);
         //End UI
     }
-
+    public void playMedia(Media m){
+        if (m != null){
+            MediaPlayer mp = new MediaPlayer(m);
+            mp.play();
+        }
+    }
     public void run() {
         try {
             enter();
