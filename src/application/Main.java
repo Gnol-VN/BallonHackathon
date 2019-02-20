@@ -1,5 +1,6 @@
 package application;
 
+import application.model.ScoreThread;
 import application.producer_consumer.Producer;
 import javafx.application.Application;
 import javafx.application.Platform;
@@ -47,8 +48,9 @@ public class Main extends Application {
         producer.setName("Producer 0");
         producer.start();
 
-//        CountdownThread countdownThread = new CountdownThread(3000);
-//        countdownThread.start();
+        ScoreThread countdownThread = new ScoreThread();
+        countdownThread.setName("COUNTDOWN THREAD");
+        countdownThread.start();
 
     }
 

@@ -17,8 +17,10 @@ import javafx.scene.shape.Circle;
 import javafx.util.Duration;
 import sun.audio.AudioPlayer;
 
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
+import java.io.*;
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.net.URLConnection;
 
 import static application.Main.SCORE;
 
@@ -54,11 +56,29 @@ public class Ballon extends Thread {
             public void handle(MouseEvent t) {
 //                rectangle.setFill(Color.RED);
                 if(right){
+                    String urlString = "http://localhost:8000/increase";
+                    URL url = null;
+                    try {
+                        url = new URL(urlString);
+                        URLConnection conn = url.openConnection();
+                        BufferedReader in = new BufferedReader(new InputStreamReader(
+                                conn.getInputStream()));
+                        String inputLine;
+                        while ((inputLine = in.readLine()) != null)
+                            System.out.println(inputLine);
+                        in.close();
+
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+
+
+
                     //destory
                     //add score
                     System.out.println("+1");
-                    SCORE++;
-                    Main.LABEL_SCORE.setText("Score: " + String.valueOf(SCORE));
+//                    SCORE++;
+//                    Main.LABEL_SCORE.setText("Score: " + String.valueOf(SCORE));
                     imageView.setImage(null);
                     label.setText(null);
                     stackPane.getChildren().removeAll();
@@ -69,11 +89,28 @@ public class Ballon extends Thread {
                 }else{
                     //destory
                     //minus score
+                    String urlString = "http://localhost:8000/decrease";
+                    URL url = null;
+                    try {
+                        url = new URL(urlString);
+                        URLConnection conn = url.openConnection();
+                        BufferedReader in = new BufferedReader(new InputStreamReader(
+                                conn.getInputStream()));
+                        String inputLine;
+                        while ((inputLine = in.readLine()) != null)
+                            System.out.println(inputLine);
+                        in.close();
+
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+
+
 
                     imageView.setImage(image2);
                     System.out.println("-1");
-                    SCORE--;
-                    Main.LABEL_SCORE.setText("Score: " + String.valueOf(SCORE));
+//                    SCORE--;
+//                    Main.LABEL_SCORE.setText("Score: " + String.valueOf(SCORE));
                     AudioClip ALERT_AUDIOCLIP = new AudioClip(Main.class.getResource("boom.wav").toString());
                     ALERT_AUDIOCLIP.play();
                 }

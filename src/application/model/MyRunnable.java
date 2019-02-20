@@ -29,11 +29,14 @@ public abstract class MyRunnable implements Runnable {
 //        return checkoutTill;
 //    }
     private Ballon ballon;
-
+private String inputLNEEEE;
     public MyRunnable(Ballon ballon) {
         this.ballon = ballon;
     }
 
+    public MyRunnable(String inputLNEEEE) {
+        this.inputLNEEEE = inputLNEEEE;
+    }
 
     public Ballon getBallon() {
         return ballon;
@@ -41,5 +44,13 @@ public abstract class MyRunnable implements Runnable {
 
     public void setBallon(Ballon ballon) {
         this.ballon = ballon;
+    }
+
+    public String getInputLNEEEE() {
+        return inputLNEEEE;
+    }
+
+    public void setInputLNEEEE(String inputLNEEEE) {
+        this.inputLNEEEE = inputLNEEEE;
     }
 }
