@@ -19,8 +19,9 @@ import java.util.TimerTask;
 public class Main extends Application {
     public static GridPane GROUP_ROOT = new GridPane();
     public static FlowPane WAITING_AREA_FLOWPANE = new FlowPane(Orientation.HORIZONTAL, 5, 5);
-    public static int time = 10 * 60;
-
+    public static int time = 3;
+    public static boolean running = true;
+    public Producer producer = new Producer();
     //Metric
     public static volatile int SCORE = 0;
     public static String NAME = "Powder Pop";
@@ -42,7 +43,7 @@ public class Main extends Application {
         prepareUI(primaryStage);
 
         //Create producer and consumer
-        Producer producer = new Producer();
+
         producer.setName("Producer 0");
         producer.start();
 
@@ -99,7 +100,8 @@ public class Main extends Application {
             public void run() {
                 if (time <= 0) {
                     timer.cancel();
-                    //TODO Stop the game
+                    running = false;
+                    //todo add a finish button
                 }
 
                 long mm = time / 60 % 60;
@@ -111,5 +113,9 @@ public class Main extends Application {
         primaryStage.setTitle("Hello World");
         primaryStage.setScene(new Scene(GROUP_ROOT, 1000, 1000));
         primaryStage.show();
+
+        primaryStage.setOnCloseRequest(windowEvent -> {
+            System.exit(0);
+        });
     }
 }

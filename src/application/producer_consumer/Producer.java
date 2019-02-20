@@ -9,6 +9,7 @@ import javafx.application.Platform;
 import java.io.FileNotFoundException;
 
 import static application.Main.SCORE_STACK;
+import static application.Main.main;
 //
 //import static application.Supermarket.*;
 //
@@ -55,7 +56,7 @@ import static application.Main.SCORE_STACK;
 
 public class Producer extends Thread {
     public void run(){
-        while (true){
+        while (Main.running){
             try {
                 Thread.sleep(500);
             } catch (InterruptedException e){
