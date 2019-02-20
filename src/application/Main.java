@@ -1,6 +1,5 @@
 package application;
 
-import application.model.CountdownThread;
 import application.producer_consumer.Producer;
 import javafx.application.Application;
 import javafx.application.Platform;
