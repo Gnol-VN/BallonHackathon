@@ -57,7 +57,6 @@ public class Main extends Application {
     public static void main(String[] args) {
         launch(args);
     }
-
     public static void prepareUI(Stage primaryStage) {
         //1. Init the properties and constrains of GROUP_ROOT
         GROUP_ROOT.setHgap(100);

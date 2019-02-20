@@ -5,31 +5,44 @@ import javafx.animation.TranslateTransition;
 import javafx.application.Platform;
 import javafx.event.EventHandler;
 import javafx.scene.control.Label;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 import javafx.util.Duration;
 
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+
+import static application.Main.SCORE;
+
 public class Ballon extends Thread {
     private int ballonID;
     private static int idCount;
     private boolean right;
     private StackPane stackPane;
+    private TranslateTransition translateTransition = new TranslateTransition();
 
-    public Ballon(String text, boolean right) {
+    public Ballon(String text, boolean right) throws FileNotFoundException{
         idCount++;
         ballonID = idCount;
 
         //Begin create UI
         StackPane stackPane = new StackPane();
         Label label = new Label(text);
+        label.setStyle("-fx-font: 22  arial; -fx-base: #b6e7c9; -fx-font-weight: bold ");
         this.right = right;
         Circle circle = new Circle();
 //        circle.setCenterX(30.0f);
 //        circle.setCenterY(13.0f);
         circle.setRadius(70.0f);
-        circle.setOnMouseClicked(new EventHandler<MouseEvent>() {
+        FileInputStream input = new FileInputStream("ball.png");
+        Image image = new Image(input);
+        ImageView imageView = new ImageView(image);
+        stackPane.setStyle("-fx-cursor: hand;");
+        stackPane.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent t) {
 //                rectangle.setFill(Color.RED);
@@ -37,17 +50,24 @@ public class Ballon extends Thread {
                     //destory
                     //add score
                     System.out.println("+1");
+                    SCORE++;
+                    Main.LABEL_SCORE.setText("Score: " + String.valueOf(SCORE));
+                    translateTransition.setDuration(Duration.millis(1000));
+
                 }else{
                     //destory
                     //minus score
                     System.out.println("-1");
+                    SCORE--;
+                    Main.LABEL_SCORE.setText("Score: " + String.valueOf(SCORE));
                 }
             }
         });
 
         circle.setFill(Color.ORANGE);
-        stackPane.getChildren().addAll(circle, label);
-        stackPane.setAccessibleText("Ballon: " + ballonID);
+//        stackPane.getChildren().addAll(circle,label);
+        stackPane.getChildren().addAll(imageView,label);
+        stackPane.setAccessibleText("Ballon: "+ ballonID);
         this.setStackPane(stackPane);
         //End UI
     }
@@ -78,10 +98,9 @@ public class Ballon extends Thread {
     }
 
     private void flyUp() throws InterruptedException {
-        TranslateTransition translateTransition = new TranslateTransition();
         translateTransition.setByY(-1300);
         translateTransition.setNode(this.getStackPane());
-        translateTransition.setDuration(Duration.millis(7000));
+        translateTransition.setDuration(Duration.millis(9000));
         translateTransition.play();
 
         Thread.sleep(17000);

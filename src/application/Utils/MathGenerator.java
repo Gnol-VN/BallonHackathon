@@ -2,8 +2,10 @@ package application.Utils;
 
 import application.model.Ballon;
 
+import java.io.FileNotFoundException;
+
 public class MathGenerator {
-    public static Ballon generatorMathBalloon() {
+    public static Ballon generatorMathBalloon() throws FileNotFoundException {
         int n1 = (int) (Math.random() * 10);
         int n2 = (int) (Math.random() * 10);
 
