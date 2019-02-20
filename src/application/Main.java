@@ -1,5 +1,6 @@
 package application;
 
+import application.model.CountdownThread;
 import application.producer_consumer.Producer;
 import javafx.application.Application;
 import javafx.geometry.Insets;
@@ -20,6 +21,7 @@ public class Main extends Application {
     //Metric
     public static volatile int SCORE = 0;
     public static String NAME = "Powder Pop";
+//    public static int TIME = 2;
 
 //    Label
     public static Label LABEL_NAME = new Label("Name: " + String.valueOf(NAME));
@@ -41,14 +43,12 @@ public class Main extends Application {
         Producer producer = new Producer();
         producer.setName("Producer 0");
         producer.start();
+
+//        CountdownThread countdownThread = new CountdownThread(3000);
+//        countdownThread.start();
+
     }
 
-//    private void createLane() {
-//        for (int i = 0; i < 5; i++) {
-//            Lane lane = new Lane();
-//            LANE_LIST.add(lane);
-//        }
-//    }
 
 
     public static void main(String[] args) {
