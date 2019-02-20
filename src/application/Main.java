@@ -5,21 +5,31 @@ import javafx.application.Application;
 import javafx.geometry.Insets;
 import javafx.geometry.Orientation;
 import javafx.scene.Scene;
-import javafx.scene.layout.ColumnConstraints;
-import javafx.scene.layout.FlowPane;
-import javafx.scene.layout.GridPane;
-import javafx.scene.layout.RowConstraints;
+import javafx.scene.control.Label;
+import javafx.scene.layout.*;
+import javafx.scene.paint.Color;
+import javafx.scene.shape.Rectangle;
 import javafx.stage.Stage;
-
-import java.util.ArrayList;
-import java.util.List;
 
 
 public class Main extends Application {
     public static GridPane GROUP_ROOT = new GridPane();
-//    public static List<Lane> LANE_LIST = new ArrayList<>();
     public static FlowPane WAITING_AREA_FLOWPANE = new FlowPane(Orientation.HORIZONTAL, 5, 5);
 
+
+    //Metric
+    public static volatile int SCORE = 0;
+    public static String NAME = "Powder Pop";
+
+//    Label
+    public static Label LABEL_NAME = new Label("Name: " + String.valueOf(NAME));
+    public static Label LABEL_SCORE = new Label("Score: " + String.valueOf(SCORE));
+    public static Label LABEL_TIMER = new Label("Time: " + String.valueOf("10:00"));
+
+
+
+    public static HBox SCORE_BOARD = new HBox();
+    public static  StackPane SCORE_STACK = new StackPane();
 
 
     @Override
@@ -48,7 +58,7 @@ public class Main extends Application {
         //1. Init the properties and constrains of GROUP_ROOT
         GROUP_ROOT.setHgap(100);
         GROUP_ROOT.setVgap(4);
-        GROUP_ROOT.setPadding(new Insets(5));
+        GROUP_ROOT.setPadding(new Insets(0));
         final int numCols = 10;
         final int numRows = 10;
         for (int i = 0; i < numCols; i++) {
@@ -62,7 +72,29 @@ public class Main extends Application {
             GROUP_ROOT.getRowConstraints().add(rowConst);
         }
         GROUP_ROOT.add(WAITING_AREA_FLOWPANE, 0, 10);
-        GROUP_ROOT.setGridLinesVisible(true);
+
+
+
+
+//        2. Scoreboard
+        SCORE_BOARD.setSpacing(200);
+//        2.2 add rectangle
+        Rectangle rectangle = new Rectangle(1000,100, Color.WHITE);
+        SCORE_STACK.getChildren().add(rectangle);
+        SCORE_STACK.setStyle("-fx-font: 30  arial; -fx-base: #b6e7c9;");
+
+//        2.2 Add label
+        SCORE_BOARD.getChildren().add(LABEL_NAME);
+        SCORE_BOARD.getChildren().add(LABEL_SCORE);
+        SCORE_BOARD.getChildren().add(LABEL_TIMER);
+        LABEL_NAME.setTextFill(Color.RED);
+        LABEL_SCORE.setTextFill(Color.RED);
+        LABEL_TIMER.setTextFill(Color.RED);
+
+        SCORE_STACK.getChildren().add(SCORE_BOARD);
+
+        GROUP_ROOT.add(SCORE_STACK, 0 , 0);
+
         primaryStage.setTitle("Hello World");
         primaryStage.setScene(new Scene(GROUP_ROOT, 1000, 1000));
         primaryStage.show();

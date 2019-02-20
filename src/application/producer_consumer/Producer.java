@@ -1,6 +1,11 @@
 package application.producer_consumer;
 //
+import application.Main;
 import application.model.Ballon;
+import application.model.MyRunnable;
+import javafx.application.Platform;
+
+import static application.Main.SCORE_STACK;
 //
 //import static application.Supermarket.*;
 //
@@ -55,6 +60,15 @@ public class Producer extends Thread {
             }
             Ballon ballon = new Ballon();
             ballon.start();
+            Platform.runLater(new Runnable(){
+
+                @Override
+                public void run() {
+                    SCORE_STACK.toFront();
+
+                }
+            });
+
         }
     }
 }
