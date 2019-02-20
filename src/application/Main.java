@@ -81,7 +81,7 @@ public class Main extends Application {
 //        2.2 add rectangle
         Rectangle rectangle = new Rectangle(1000,100, Color.WHITE);
         SCORE_STACK.getChildren().add(rectangle);
-        SCORE_STACK.setStyle("-fx-font: 30  arial; -fx-base: #b6e7c9;");
+        SCORE_STACK.setStyle("-fx-font: 30  arial; -fx-base: #b6e7c9; ");
 
 //        2.2 Add label
         SCORE_BOARD.getChildren().add(LABEL_NAME);
@@ -95,7 +95,7 @@ public class Main extends Application {
 
         GROUP_ROOT.add(SCORE_STACK, 0 , 0);
 
-        primaryStage.setTitle("Hello World");
+        primaryStage.setTitle("Powder Pop");
         primaryStage.setScene(new Scene(GROUP_ROOT, 1000, 1000));
         primaryStage.show();
     }

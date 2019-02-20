@@ -1,8 +1,12 @@
 package application.producer_consumer;
 //
+import application.Main;
 import application.Utils.MathGenerator;
 import application.model.Ballon;
+import application.model.MyRunnable;
 import javafx.application.Platform;
+
+import java.io.FileNotFoundException;
 
 import static application.Main.SCORE_STACK;
 //
@@ -57,7 +61,12 @@ public class Producer extends Thread {
             } catch (InterruptedException e){
                 e.printStackTrace();
             }
-            Ballon ballon = MathGenerator.generatorMathBalloon();
+            Ballon ballon = null;
+            try {
+                ballon = MathGenerator.generatorMathBalloon();
+            } catch (FileNotFoundException e) {
+                e.printStackTrace();
+            }
             ballon.start();
             Platform.runLater(new Runnable(){
 
