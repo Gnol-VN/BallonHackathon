@@ -18,7 +18,7 @@ public class ScoreThread extends Thread{
     public void run(){
         try {
             while(true){
-                Thread.sleep(200);
+                Thread.sleep(1000);
                 String urlString = "http://localhost:8000/get";
                 URL url = null;
                 try {

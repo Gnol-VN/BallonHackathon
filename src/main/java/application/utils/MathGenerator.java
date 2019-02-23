@@ -1,4 +1,4 @@
-package application.Utils;
+package application.utils;
 
 import application.model.Ballon;
 

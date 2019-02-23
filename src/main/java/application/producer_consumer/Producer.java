@@ -1,9 +1,8 @@
 package application.producer_consumer;
 //
 import application.Main;
-import application.Utils.MathGenerator;
+import application.utils.MathGenerator;
 import application.model.Ballon;
-import application.model.MyRunnable;
 import javafx.application.Platform;
 
 import java.io.FileNotFoundException;
